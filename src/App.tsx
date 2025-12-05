@@ -5,7 +5,7 @@ import ResourceCalculator from './components/ResourceCalculator';
 const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-900 to-gray-800 text-white p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <header className="mb-10 text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-yellow-400">
             Calculadora de Recursos para SunflowerLand

@@ -94,6 +94,192 @@ export const resourceDefinitions: ResourceDefinitions = {
         { resource: "oro", quantity: 5 },
         { resource: "madera", quantity: 3 }
         ]
+    },
+    "water-well": {
+        name: "Water Well",
+        icon: "well.webp",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Los cultivos necesitan agua",
+        cost: 100,
+        requires: [
+        { resource: "madera", quantity: 5 }
+        ]
+    },
+    "kitchen": {
+        name: "Kitchen",
+        icon: "kitchen_icon.png",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Mejora tu juego de cocina",
+        cost: 10,
+        requires: [
+        { resource: "piedra", quantity: 5 },
+        { resource: "madera", quantity: 30 }
+        ]
+    },
+    "hen-house": {
+        name: "Hen House",
+        icon: "hen_house_icon.png",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Haz crecer tu imperio de pollos",
+        cost: 100,
+        requires: [
+        { resource: "oro", quantity: 5 },
+        { resource: "hierro", quantity: 5 },
+        { resource: "madera", quantity: 30 }
+        ]
+    },
+    "crafting-box": {
+        name: "Crafting Box",
+        icon: "crafting_box.webp",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Una caja para fabricar varios objetos",
+        cost: 0,
+        requires: [
+        { resource: "piedra", quantity: 5 },
+        { resource: "madera", quantity: 100 }
+        ]
+    },
+    "compost-bin": {
+        name: "Compost Bin",
+        icon: "composter_basic.webp",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Produce cebo y fertilizante de forma regular",
+        cost: 0,
+        requires: [
+        { resource: "piedra", quantity: 5 },
+        { resource: "madera", quantity: 5 }
+        ]
+    },
+    "bakery": {
+        name: "Bakery",
+        icon: "bakery_icon.png",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Hornea tus tartas favoritas",
+        cost: 200,
+        requires: [
+        { resource: "oro", quantity: 5 },
+        { resource: "piedra", quantity: 20 },
+        { resource: "madera", quantity: 50 }
+        ]
+    },
+    "turbo-composter": {
+        name: "Trubo Compost",
+        icon: "composter_advanced.webp",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Produce cebos y fertilizantes avanzados de forma regular",
+        cost: 0,
+        requires: [
+        { resource: "piedra", quantity: 25 },
+        { resource: "madera", quantity: 50 }
+        ]
+    },
+    "deli": {
+        name: "Deli",
+        icon: "deli_icon.png",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Satisface tu apetito con estos exquisitos manjares!",
+        cost: 300,
+        requires: [
+        { resource: "oro", quantity: 10 },
+        { resource: "piedra", quantity: 50 },
+        { resource: "madera", quantity: 50 }
+        ]
+    },
+    "premium-composter": {
+        name: "Premium Compost",
+        icon: "composter_expert.webp",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Produce cebos y fertilizantes expertos de forma regular",
+        cost: 0,
+        requires: [
+        { resource: "oro", quantity: 50 }
+        ]
+    },
+    "warehouse": {
+        name: "Warehouse",
+        icon: "warehouse_icon.png",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Mantiene tus semillas seguras",
+        cost: 0,
+        requires: [
+        { resource: "piedra", quantity: 150 },
+        { resource: "madera", quantity: 250 }
+        ]
+    },
+    "smoothie-shack": {
+        name: "Smoothie Shack",
+        icon: "smoothie_shack_icon.png",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Recien exprimido!",
+        cost: 0,
+        requires: [
+        { resource: "hierro", quantity: 10 },
+        { resource: "piedra", quantity: 25 },
+        { resource: "madera", quantity: 25 }
+        ]
+    },
+    "toolshed": {
+        name: "Toolshed",
+        icon: "toolshed_icon.png",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Un lugar para guardar herramientas",
+        cost: 0,
+        requires: [
+        { resource: "pico-madera", quantity: 50 },
+        { resource: "hacha", quantity: 100 },
+        { resource: "oro", quantity: 25 },
+        { resource: "hierro", quantity: 30 },
+        { resource: "madera", quantity: 500 }
+        ]
+    },
+    "barn": {
+        name: "Barn",
+        icon: "barn_sm.webp",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Bonita y acogedora casa para tus amigos de 4 patas",
+        cost: 200,
+        requires: [
+        { resource: "oro", quantity: 10 },
+        { resource: "hierro", quantity: 10 },
+        { resource: "madera", quantity: 150 }
+        ]
+    },
+    "crop-machine": {
+        name: "Crop Machine",
+        icon: "crop_machine.webp",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Automatice la produccion de sus cultivos",
+        cost: 8000,
+        requires: [
+        { resource: "hierro", quantity: 125 },
+        { resource: "madera", quantity: 1250 }
+        ]
+    },
+    "greenhouse": {
+        name: "Greenhouse",
+        icon: "greenhouse_icon.webp",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Un santuario para cultivos sensibles",
+        cost: 4800,
+        requires: [
+        { resource: "piedra", quantity: 100 },
+        { resource: "madera", quantity: 500 }
+        ]
     }
 };
 // Función para calcular los recursos necesarios con costo total CORREGIDA

@@ -22,8 +22,8 @@ const ResourceCalculator: React.FC = () => {
     }, [selectedResource, quantity]); // Solo recalcula cuando cambian estas dependencias
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-1 space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        <div className="lg:col-span-2 space-y-8">
             <div className="bg-gray-800 rounded-xl p-6 shadow-lg">
             <h2 className="text-xl font-bold mb-6 text-green-400">Configuración</h2>
             
@@ -65,7 +65,7 @@ const ResourceCalculator: React.FC = () => {
             </div>
         </div>
         
-        <div className="lg:col-span-2 space-y-8">
+        <div className="lg:col-span-3 space-y-8">
             <ResourceResults results={results} />
             
             {results && (
