@@ -23,7 +23,7 @@ const ResourceIcon: React.FC<ResourceIconProps> = ({
         const loadImage = async () => {
         try {
             // Para Vite: usar import.meta.glob para precargar
-            const images = import.meta.glob('@/assets/*.png', { eager: true });
+            const images = import.meta.glob(['@/assets/*.png', '@/assets/*.webp'], { eager: true });
             
             // Buscar la imagen
             const imageEntry = Object.entries(images).find(([path]) => {
