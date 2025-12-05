@@ -66,14 +66,15 @@ const ResourceCalculator: React.FC = () => {
         </div>
         
         <div className="lg:col-span-3 space-y-8">
+            
+            {results && (
+            <DetailedBreakdown results={results} />
+            )}
+            
             <ResourceResults results={results} />
             
             {results && (
             <ResourceGraph resources={results.resources} />
-            )}
-            
-            {results && (
-            <DetailedBreakdown results={results} />
             )}
         </div>
         </div>
