@@ -13,6 +13,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-green-500",
         color: "bg-green-500",
         description: "Herramienta necesaria para obtener madera",
+        category: "tools",
         cost: 20, // Costo fijo en dinero
         requires: []
     },
@@ -22,6 +23,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-700",
         color: "bg-yellow-700",
         description: "Recurso básico obtenido con hacha",
+        category: "resources",
         requires: [{ resource: "hacha", quantity: 1 }]
     },
     "pico-madera": {
@@ -30,6 +32,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-600",
         color: "bg-yellow-600",
         description: "Herramienta para obtener piedra",
+        category: "tools",
         cost: 20,
         requires: [
         { resource: "madera", quantity: 3 }
@@ -41,6 +44,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-gray-400",
         color: "bg-gray-400",
         description: "Recurso obtenido con pico de madera",
+        category: "resources",
         requires: [{ resource: "pico-madera", quantity: 1 }]
     },
     "pico-piedra": {
@@ -49,6 +53,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-gray-500",
         color: "bg-gray-500",
         description: "Herramienta para obtener hierro",
+        category: "tools",
         cost: 20,
         requires: [
         { resource: "piedra", quantity: 5 },
@@ -61,6 +66,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-orange-500",
         color: "bg-orange-500",
         description: "Recurso final obtenido con pico de piedra",
+        category: "resources",
         requires: [{ resource: "pico-piedra", quantity: 1 }]
     },
     oro: {
@@ -69,6 +75,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-400",
         color: "bg-yellow-400",
         description: "Recurso obtenido con pico de hierro",
+        category: "resources",
         requires: [{ resource: "pico-hierro", quantity: 1 }]
     },
     "pico-hierro": {
@@ -77,6 +84,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-orange-400",
         color: "bg-orange-400",
         description: "Herramienta para obtener oro",
+        category: "tools",
         cost: 80,
         requires: [
         { resource: "hierro", quantity: 5 },
@@ -89,6 +97,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Herramienta avanzada",
+        category: "tools",
         cost: 100,
         requires: [
         { resource: "oro", quantity: 5 },
@@ -101,6 +110,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Los cultivos necesitan agua",
+        category: "buildings",
         cost: 100,
         requires: [
         { resource: "madera", quantity: 5 }
@@ -112,6 +122,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Mejora tu juego de cocina",
+        category: "buildings",
         cost: 10,
         requires: [
         { resource: "piedra", quantity: 5 },
@@ -124,6 +135,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Haz crecer tu imperio de pollos",
+        category: "buildings",
         cost: 100,
         requires: [
         { resource: "oro", quantity: 5 },
@@ -137,6 +149,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Una caja para fabricar varios objetos",
+        category: "buildings",
         cost: 0,
         requires: [
         { resource: "piedra", quantity: 5 },
@@ -149,6 +162,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Produce cebo y fertilizante de forma regular",
+        category: "buildings",
         cost: 0,
         requires: [
         { resource: "piedra", quantity: 5 },
@@ -161,6 +175,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Hornea tus tartas favoritas",
+        category: "buildings",
         cost: 200,
         requires: [
         { resource: "oro", quantity: 5 },
@@ -174,6 +189,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Produce cebos y fertilizantes avanzados de forma regular",
+        category: "buildings",
         cost: 0,
         requires: [
         { resource: "piedra", quantity: 25 },
@@ -186,6 +202,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Satisface tu apetito con estos exquisitos manjares!",
+        category: "buildings",
         cost: 300,
         requires: [
         { resource: "oro", quantity: 10 },
@@ -199,6 +216,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Produce cebos y fertilizantes expertos de forma regular",
+        category: "buildings",
         cost: 0,
         requires: [
         { resource: "oro", quantity: 50 }
@@ -210,6 +228,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Mantiene tus semillas seguras",
+        category: "buildings",
         cost: 0,
         requires: [
         { resource: "piedra", quantity: 150 },
@@ -222,6 +241,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Recien exprimido!",
+        category: "buildings",
         cost: 0,
         requires: [
         { resource: "hierro", quantity: 10 },
@@ -235,6 +255,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Un lugar para guardar herramientas",
+        category: "buildings",
         cost: 0,
         requires: [
         { resource: "pico-madera", quantity: 50 },
@@ -250,6 +271,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Bonita y acogedora casa para tus amigos de 4 patas",
+        category: "buildings",
         cost: 200,
         requires: [
         { resource: "oro", quantity: 10 },
@@ -263,6 +285,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Automatice la produccion de sus cultivos",
+        category: "buildings",
         cost: 8000,
         requires: [
         { resource: "hierro", quantity: 125 },
@@ -275,6 +298,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         iconColor: "text-yellow-300",
         color: "bg-yellow-300",
         description: "Un santuario para cultivos sensibles",
+        category: "buildings",
         cost: 4800,
         requires: [
         { resource: "piedra", quantity: 100 },

@@ -12,6 +12,7 @@ export interface ResourceDefinition {
     description: string;
     cost?: number;
     requires: ResourceRequirement[];
+    category: 'crops' | 'resources' | 'tools' | 'buildings' | 'fishing' | 'animals'; // Nueva propiedad
 }
 
 export interface ResourceDetails extends ResourceDefinition {

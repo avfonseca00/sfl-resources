@@ -1,5 +1,5 @@
-// components/ResourceSelector.tsx
-import React from 'react';
+// components/ResourceSelector.tsx - Versión corregida sin parámetros no usados
+import React, { useState, useMemo } from 'react';
 import { resourceDefinitions } from '../utils/resourceCalculations';
 import ResourceIcon from './ResourceIcon';
 
@@ -10,44 +10,112 @@ interface ResourceSelectorProps {
     setQuantity: (quantity: number) => void;
 }
 
+// Tipar las categorías
+const CATEGORIES = [
+    { id: 'crops', name: '🌱 Cultivos', icon: '🌱' },
+    { id: 'resources', name: '📦 Recursos', icon: '📦' },
+    { id: 'tools', name: '🛠️ Herramientas', icon: '🛠️' },
+    { id: 'buildings', name: '🏗️ Edificios', icon: '🏗️' },
+    { id: 'fishing', name: '🎣 Pesca', icon: '🎣' },
+    { id: 'animals', name: '🐄 Animales', icon: '🐄' },
+] as const;
+
+type CategoryId = typeof CATEGORIES[number]['id'];
+
 const ResourceSelector: React.FC<ResourceSelectorProps> = ({
     selectedResource,
     setSelectedResource,
     quantity,
     setQuantity
     }) => {
-    const resources = Object.keys(resourceDefinitions);
+    const [activeCategory, setActiveCategory] = useState<CategoryId>('resources');
+    
+    // Agrupar recursos por categoría usando forEach en lugar de filter
+    const resourcesByCategory = useMemo(() => {
+        const result: Record<CategoryId, Array<[string, typeof resourceDefinitions[string]]>> = {
+        crops: [],
+        resources: [],
+        tools: [],
+        buildings: [],
+        fishing: [],
+        animals: [],
+        };
+        
+        // Usar forEach en lugar de filter para evitar parámetros no usados
+        Object.entries(resourceDefinitions).forEach(([key, def]) => {
+        const category = def.category as CategoryId;
+        if (result[category]) {
+            result[category].push([key, def]);
+        } else {
+            result.resources.push([key, def]);
+        }
+        });
+        
+        return result;
+    }, []);
+    
+    // Recursos filtrados por categoría activa
+    const filteredResources = resourcesByCategory[activeCategory] || [];
 
     return (
         <div className="space-y-6">
         <div>
-            <label className="block text-gray-300 mb-2 font-medium">
-            Selecciona el recurso
+            <label className="block text-gray-300 mb-3 font-medium">
+            Selecciona categoría
             </label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {resources.map(resource => {
-                const def = resourceDefinitions[resource];
-                return (
+            
+            {/* Navegación de categorías */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-wrap gap-2 mb-6">
+            {CATEGORIES.map(cat => (
                 <button
-                    key={resource}
-                    onClick={() => setSelectedResource(resource)}
-                    className={`p-4 rounded-lg transition-all flex flex-col items-center justify-start ${
-                    selectedResource === resource 
-                        ? 'bg-linear-to-r from-blue-600 to-purple-600 transform scale-105 shadow-lg' 
-                        : 'bg-gray-700 hover:bg-gray-600'
-                    }`}
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`flex items-center justify-center sm:justify-start p-3 rounded-lg transition-all ${
+                    activeCategory === cat.id
+                    ? 'bg-linear-to-r from-blue-600 to-purple-600 text-white shadow-lg'
+                    : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
+                }`}
                 >
-                    <div className={`text-2xl mb-2 ${def.iconColor}`}>
-                        <ResourceIcon 
-                            icon={def.icon} 
-                            name={def.name}
-                            size="md"
-                        />
-                    </div>
-                    <span className="font-medium">{def.name}</span>
+                <span className="text-xl mr-2">{cat.icon}</span>
+                <span className="font-medium text-sm sm:text-base">{cat.name}</span>
                 </button>
-                );
-            })}
+            ))}
+            </div>
+            
+            <label className="block text-gray-300 mb-3 font-medium">
+            Selecciona {CATEGORIES.find(c => c.id === activeCategory)?.name.toLowerCase()}
+            </label>
+            
+            {/* Recursos de la categoría seleccionada */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {filteredResources.map(([key, def]) => (
+                <button
+                key={key}
+                onClick={() => setSelectedResource(key)}
+                className={`p-4 rounded-lg transition-all flex flex-col items-center justify-center ${
+                    selectedResource === key 
+                    ? 'bg-linear-to-r from-blue-600 to-purple-600 transform scale-105 shadow-lg' 
+                    : 'bg-gray-700 hover:bg-gray-600'
+                }`}
+                >
+                <div className={`mb-2 ${def.iconColor}`}>
+                    <ResourceIcon 
+                    icon={def.icon} 
+                    name={def.name}
+                    size="md"
+                    />
+                </div>
+                <span className="font-medium text-sm mt-1">{def.name}</span>
+                </button>
+            ))}
+            
+            {filteredResources.length === 0 && (
+                <div className="col-span-3 text-center py-8 text-gray-400 bg-gray-800/50 rounded-lg">
+                <div className="text-3xl mb-2">📭</div>
+                <p>No hay recursos en esta categoría aún</p>
+                <p className="text-sm mt-1">Agrega recursos en utils/resourceCalculations.ts</p>
+                </div>
+            )}
             </div>
         </div>
         
