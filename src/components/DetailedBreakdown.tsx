@@ -12,7 +12,8 @@ const DetailedBreakdown: React.FC<DetailedBreakdownProps> = ({ results }) => {
     if (!results || !results.rawCounts) return null;
 
     const tools = ['hacha', 'pico-madera', 'pico-piedra', 'pico-hierro', 'pico-oro'];
-    const resources = ['madera', 'piedra', 'hierro', 'oro'];
+    const resources = ['madera', 'piedra', 'hierro', 'oro', 'crimstone'];
+    const crops = ['sunflower', 'rhubarb', 'carrot', 'cabbage', 'soybean', 'corn', 'wheat', 'kale', 'barley', 'tomato', 'blueberry', 'orange', 'rice'];
     
     // Filtrar y mapear herramientas con cantidad > 0
     const toolCounts = tools
@@ -43,6 +44,23 @@ const DetailedBreakdown: React.FC<DetailedBreakdownProps> = ({ results }) => {
             name: definition?.name || res,
             quantity: results.rawCounts[res],
             icon: definition?.icon || '📦'
+        };
+        });
+
+        // Filtrar y mapear recursos con cantidad > 0
+    const cropCounts = crops
+        .filter(crop => results.rawCounts[crop] > 0)
+        .map(crop => {
+        const definition = resourceDefinitions[crop];
+        const quantity = results.rawCounts[crop];
+        const cost = definition?.cost || 0;
+        return {
+            id: crop,
+            name: definition?.name || crop,
+            quantity: results.rawCounts[crop],
+            icon: definition?.icon || '📦',
+            cost: (cost * quantity).toFixed(2),
+            unitCost: cost
         };
         });
 
@@ -117,6 +135,39 @@ const DetailedBreakdown: React.FC<DetailedBreakdownProps> = ({ results }) => {
                 )}
             </div>
             </div>
+
+            <div>
+            <h4 className="font-bold text-lg mb-4 text-blue-300">Cultivos necesarios</h4>
+            <div className="space-y-3">
+                {cropCounts.map((crop) => (
+                <div key={crop.id} className="flex justify-between items-center p-3 bg-gray-700/50 rounded-lg">
+                    <div className="flex items-center">
+                    <div className="w-10 h-10 bg-gray-600 rounded-lg flex items-center justify-center mr-3">
+                        <span className="text-lg">
+                            <ResourceIcon 
+                            icon={crop.icon} 
+                            name={crop.name}
+                            size="sm"
+                        /></span>
+                    </div>
+                    <div>
+                        <div className="font-medium">{crop.name}</div>
+                        <div className="text-sm text-gray-400">Cantidad: {crop.quantity}</div>
+                    </div>
+                    </div>
+                    <div className="text-right">
+                    <div className="font-bold text-green-400">${crop.cost}</div>
+                    <div className="text-xs text-gray-400">
+                        (${crop.unitCost} c/u)
+                    </div>
+                    </div>
+                </div>
+                ))}
+                {cropCounts.length === 0 && (
+                <div className="text-gray-500 text-center py-4">No se requieren cultivos</div>
+                )}
+            </div>
+            </div>
         </div>
         
         <div className="mt-8 pt-6 border-t border-gray-700">
@@ -142,7 +193,7 @@ const DetailedBreakdown: React.FC<DetailedBreakdownProps> = ({ results }) => {
                 
                 <div className="pt-4 border-t border-gray-700 flex justify-between text-lg font-bold">
                 <span>TOTAL FINAL</span>
-                <span className="text-green-400">${results.totalCost}</span>
+                <span className="text-green-400">${results.totalCost.toFixed(2)}</span>
                 </div>
             </div>
             </div>

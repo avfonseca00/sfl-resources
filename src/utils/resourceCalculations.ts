@@ -7,6 +7,136 @@ import type{
 
 // Definición de recursos en formato JSON con tipos
 export const resourceDefinitions: ResourceDefinitions = {
+    sunflower: {
+        name: "Sunflower",
+        icon: "crop.png",
+        iconColor: "text-green-500",
+        color: "bg-green-500",
+        description: "Herramienta necesaria para obtener madera",
+        category: "crops",
+        cost: 0.01, // Costo fijo en dinero
+        requires: []
+    },
+    rhubarb: {
+        name: "Rhubarb",
+        icon: "rhubarb.png",
+        iconColor: "text-green-500",
+        color: "bg-green-500",
+        description: "Herramienta necesaria para obtener madera",
+        category: "crops",
+        cost: 0.15, // Costo fijo en dinero
+        requires: []
+    },
+    carrot: {
+        name: "Carrot",
+        icon: "carrot.png",
+        iconColor: "text-green-500",
+        color: "bg-green-500",
+        description: "Herramienta necesaria para obtener madera",
+        category: "crops",
+        cost: 0.5, // Costo fijo en dinero
+        requires: []
+    },
+    cabbage: {
+        name: "Cabbage",
+        icon: "cabbage.png",
+        iconColor: "text-green-500",
+        color: "bg-green-500",
+        description: "Herramienta necesaria para obtener madera",
+        category: "crops",
+        cost: 1, // Costo fijo en dinero
+        requires: []
+    },
+    soybean: {
+        name: "Soybean",
+        icon: "soybean.png",
+        iconColor: "text-green-500",
+        color: "bg-green-500",
+        description: "Herramienta necesaria para obtener madera",
+        category: "crops",
+        cost: 1.5, // Costo fijo en dinero
+        requires: []
+    },
+    corn: {
+        name: "Corn",
+        icon: "corn.png",
+        iconColor: "text-green-500",
+        color: "bg-green-500",
+        description: "Herramienta necesaria para obtener madera",
+        category: "crops",
+        cost: 7, // Costo fijo en dinero
+        requires: []
+    },
+    wheat: {
+        name: "Wheat",
+        icon: "wheat.png",
+        iconColor: "text-green-500",
+        color: "bg-green-500",
+        description: "Herramienta necesaria para obtener madera",
+        category: "crops",
+        cost: 5, // Costo fijo en dinero
+        requires: []
+    },
+    kale: {
+        name: "Kale",
+        icon: "kale.png",
+        iconColor: "text-green-500",
+        color: "bg-green-500",
+        description: "Herramienta necesaria para obtener madera",
+        category: "crops",
+        cost: 7, // Costo fijo en dinero
+        requires: []
+    },
+    barley: {
+        name: "Barley",
+        icon: "barley.png",
+        iconColor: "text-green-500",
+        color: "bg-green-500",
+        description: "Herramienta necesaria para obtener madera",
+        category: "crops",
+        cost: 10, // Costo fijo en dinero
+        requires: []
+    },
+    tomato: {
+        name: "Tomato",
+        icon: "tomato.webp",
+        iconColor: "text-green-500",
+        color: "bg-green-500",
+        description: "Herramienta necesaria para obtener madera",
+        category: "crops",
+        cost: 5, // Costo fijo en dinero
+        requires: []
+    },
+    blueberry: {
+        name: "Blueberry",
+        icon: "blueberry.png",
+        iconColor: "text-green-500",
+        color: "bg-green-500",
+        description: "Herramienta necesaria para obtener madera",
+        category: "crops",
+        cost: 30, // Costo fijo en dinero
+        requires: []
+    },
+    orange: {
+        name: "Orange",
+        icon: "orange.png",
+        iconColor: "text-green-500",
+        color: "bg-green-500",
+        description: "Herramienta necesaria para obtener madera",
+        category: "crops",
+        cost: 50, // Costo fijo en dinero
+        requires: []
+    },
+    rice: {
+        name: "Rice",
+        icon: "rice.webp",
+        iconColor: "text-green-500",
+        color: "bg-green-500",
+        description: "Herramienta necesaria para obtener madera",
+        category: "crops",
+        cost: 240, // Costo fijo en dinero
+        requires: []
+    },
     hacha: {
         name: "Axe",
         icon: "axe.png",
@@ -78,6 +208,15 @@ export const resourceDefinitions: ResourceDefinitions = {
         category: "resources",
         requires: [{ resource: "pico-hierro", quantity: 1 }]
     },
+    crimstone: {
+        name: "Crimstone",
+        icon: "crimstone.png",
+        iconColor: "text-red-400",
+        color: "bg-yellow-400",
+        description: "Recurso obtenido con pico de hierro",
+        category: "resources",
+        requires: [{ resource: "pico-oro", quantity: 1 }]
+    },
     "pico-hierro": {
         name: "Iron Pickaxe",
         icon: "iron_pickaxe.png",
@@ -102,6 +241,32 @@ export const resourceDefinitions: ResourceDefinitions = {
         requires: [
         { resource: "oro", quantity: 5 },
         { resource: "madera", quantity: 3 }
+        ]
+    },
+    "fishing-rod": {
+        name: "Fishing Rod",
+        icon: "fishing_rod.png",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Se utiliza para pescar",
+        category: "tools",
+        cost: 20,
+        requires: [
+        { resource: "piedra", quantity: 1 },
+        { resource: "madera", quantity: 3 }
+        ]
+    },
+    "shovel": {
+        name: "Shovel",
+        icon: "sand_shovel.png",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Se utiliza para cavar tesoros",
+        category: "tools",
+        cost: 20,
+        requires: [
+        { resource: "piedra", quantity: 1 },
+        { resource: "madera", quantity: 2 }
         ]
     },
     "water-well": {
@@ -231,6 +396,8 @@ export const resourceDefinitions: ResourceDefinitions = {
         category: "buildings",
         cost: 0,
         requires: [
+        { resource: "wheat", quantity: 500 },
+        { resource: "kale", quantity: 100 },
         { resource: "piedra", quantity: 150 },
         { resource: "madera", quantity: 250 }
         ]
@@ -288,6 +455,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         category: "buildings",
         cost: 8000,
         requires: [
+        { resource: "crimstone", quantity: 50 },
         { resource: "hierro", quantity: 125 },
         { resource: "madera", quantity: 1250 }
         ]
@@ -303,6 +471,45 @@ export const resourceDefinitions: ResourceDefinitions = {
         requires: [
         { resource: "piedra", quantity: 100 },
         { resource: "madera", quantity: 500 }
+        ]
+    },
+    "earthworm": {
+        name: "Earthworm",
+        icon: "earthworm.png",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Un santuario para cultivos sensibles",
+        category: 'fishing',
+        cost: 0,
+        requires: [
+        { resource: "carrot", quantity: 5 },
+        { resource: "rhubarb", quantity: 10 }
+        ]
+    },
+    "grub": {
+        name: "Grub",
+        icon: "grub.png",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Un santuario para cultivos sensibles",
+        category: 'fishing',
+        cost: 0,
+        requires: [
+        { resource: "corn", quantity: 3 },
+        { resource: "soybean", quantity: 5 }
+        ]
+    },
+    "red-wiggler": {
+        name: "Red Wiggler",
+        icon: "red_wiggler.png",
+        iconColor: "text-yellow-300",
+        color: "bg-yellow-300",
+        description: "Un santuario para cultivos sensibles",
+        category: 'fishing',
+        cost: 0,
+        requires: [
+        { resource: "blueberry", quantity: 8 },
+        { resource: "madera", quantity: 5 }
         ]
     }
 };
