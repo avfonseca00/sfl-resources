@@ -12,12 +12,12 @@ interface ResourceSelectorProps {
 
 // Tipar las categorías
 const CATEGORIES = [
-    { id: 'crops', name: '🌱 Cultivos', icon: '🌱' },
-    { id: 'resources', name: '📦 Recursos', icon: '📦' },
-    { id: 'tools', name: '🛠️ Herramientas', icon: '🛠️' },
-    { id: 'buildings', name: '🏗️ Edificios', icon: '🏗️' },
-    { id: 'fishing', name: '🎣 Pesca', icon: '🎣' },
-    { id: 'animals', name: '🐄 Animales', icon: '🐄' },
+    { id: 'crops', name: 'Cultivos', icon: 'crop.png' },
+    { id: 'resources', name: 'Recursos', icon: 'wood.png' },
+    { id: 'tools', name: 'Herramientas', icon: "iron_pickaxe.png" },
+    { id: 'buildings', name: 'Edificios', icon: 'hammer.png' },
+    { id: 'fishing', name: 'Pesca', icon: 'fish.png' },
+    { id: 'animals', name: 'Animales', icon: 'chicken.png' },
 ] as const;
 
 type CategoryId = typeof CATEGORIES[number]['id'];
@@ -76,7 +76,13 @@ const ResourceSelector: React.FC<ResourceSelectorProps> = ({
                     : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
                 }`}
                 >
-                <span className="text-xl mr-2">{cat.icon}</span>
+                <span className="text-xl mr-2">
+                    <ResourceIcon 
+                    icon={cat.icon} 
+                    name={cat.name}
+                    size="md"
+                    />
+                </span>
                 <span className="font-medium text-sm sm:text-base">{cat.name}</span>
                 </button>
             ))}
@@ -113,7 +119,7 @@ const ResourceSelector: React.FC<ResourceSelectorProps> = ({
                 <div className="col-span-3 text-center py-8 text-gray-400 bg-gray-800/50 rounded-lg">
                 <div className="text-3xl mb-2">📭</div>
                 <p>No hay recursos en esta categoría aún</p>
-                <p className="text-sm mt-1">Agrega recursos en utils/resourceCalculations.ts</p>
+                <p className="text-sm mt-1">Los refuerzos vienen en camino</p>
                 </div>
             )}
             </div>
@@ -139,7 +145,7 @@ const ResourceSelector: React.FC<ResourceSelectorProps> = ({
                 >
                 <span className="text-xl">-</span>
                 </button>
-                <div className="w-20 h-10 flex items-center justify-center bg-gray-900 border-y border-gray-700">
+                <div className="w-10 md:w-20 h-10 flex items-center justify-center bg-gray-900 border-y border-gray-700">
                 <span className="text-xl font-bold">{quantity}</span>
                 </div>
                 <button

@@ -1,7 +1,7 @@
 // components/ResourceCalculator.tsx
 import React, { useState, useMemo } from 'react'; // Cambiado: useMemo en lugar de useEffect
 import ResourceSelector from './ResourceSelector';
-import ResourceResults from './ResourceResults';
+// import ResourceResults from './ResourceResults';
 import ResourceGraph from './ResourceGraph';
 import DetailedBreakdown from './DetailedBreakdown';
 import { resourceDefinitions, calculateResources } from '../utils/resourceCalculations';
@@ -71,7 +71,7 @@ const ResourceCalculator: React.FC = () => {
             <DetailedBreakdown results={results} />
             )}
             
-            <ResourceResults results={results} />
+            {/* <ResourceResults results={results} /> */}
             
             {results && (
             <ResourceGraph resources={results.resources} />
