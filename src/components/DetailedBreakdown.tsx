@@ -23,6 +23,8 @@ const DetailedBreakdown: React.FC<DetailedBreakdownProps> = ({ results }) => {
         const quantity = results.rawCounts[tool];
         const icon = definition?.icon || "";
         const cost = definition?.cost || 0;
+        const unitSfl = definition?.sflPrice || 0;
+        const totalSfl = unitSfl * quantity;
         
         return {
             id: tool,
@@ -30,6 +32,8 @@ const DetailedBreakdown: React.FC<DetailedBreakdownProps> = ({ results }) => {
             quantity: quantity,
             icon: icon,
             cost: cost * quantity,
+            unitSfl: unitSfl,
+            totalSfl: totalSfl,
             unitCost: cost
         };
         });
@@ -39,11 +43,16 @@ const DetailedBreakdown: React.FC<DetailedBreakdownProps> = ({ results }) => {
         .filter(res => results.rawCounts[res] > 0)
         .map(res => {
         const definition = resourceDefinitions[res];
+        const quantity = results.rawCounts[res]
+        const unitSfl = definition?.sflPrice || 0;
+        const totalSfl = unitSfl * quantity;
         return {
             id: res,
             name: definition?.name || res,
-            quantity: results.rawCounts[res],
-            icon: definition?.icon || '📦'
+            quantity: quantity,
+            icon: definition?.icon || '📦',
+            unitSfl: unitSfl,
+            totalSfl: totalSfl,
         };
         });
 
@@ -91,10 +100,15 @@ const DetailedBreakdown: React.FC<DetailedBreakdownProps> = ({ results }) => {
                     </div>
                     </div>
                     <div className="text-right">
-                    <div className="font-bold text-green-400">${tool.cost}</div>
-                    <div className="text-xs text-gray-400">
+                        <div className="font-bold text-green-400">${tool.cost}</div>
+                        {tool.unitSfl > 0 && (
+                        <div className="text-yellow-400 text-sm">
+                            {tool.totalSfl.toFixed(4)} $SFL
+                        </div>
+                        )}
+                        <div className="text-xs text-gray-400">
                         (${tool.unitCost} c/u)
-                    </div>
+                        </div>
                     </div>
                 </div>
                 ))}
@@ -125,8 +139,8 @@ const DetailedBreakdown: React.FC<DetailedBreakdownProps> = ({ results }) => {
                     </div>
                     </div>
                     <div className="text-right">
-                    <div className="text-xl font-bold">{resource.quantity}</div>
-                    <div className="text-xs text-gray-400">unidades</div>
+                        <div className="text-xl font-bold">{resource.quantity}</div>
+                        <div className="text-xs text-gray-400">unidades</div>
                     </div>
                 </div>
                 ))}
