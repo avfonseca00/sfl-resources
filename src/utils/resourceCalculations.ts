@@ -2,7 +2,9 @@
 import type{ 
     ResourceDefinitions, 
     CalculationResult,
-    ResourceDetails
+    ResourceDetails,
+    PricesResponse,
+    SflRateResponse
 } from '../types/resourceTypes';
 
 // Definición de recursos en formato JSON con tipos
@@ -239,7 +241,7 @@ export const resourceDefinitions: ResourceDefinitions = {
         category: "tools",
         cost: 100,
         requires: [
-        { resource: "oro", quantity: 5 },
+        { resource: "oro", quantity: 3 },
         { resource: "madera", quantity: 3 }
         ]
     },
@@ -513,54 +515,121 @@ export const resourceDefinitions: ResourceDefinitions = {
         ]
     }
 };
-// Función para calcular los recursos necesarios con costo total CORREGIDA
+
+export const fetchAndUpdateRate = async (): Promise<number | null> => {
+    try {
+        // Usar allorigins.win como proxy
+        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        const encodedUrl = encodeURIComponent('https://sfl.world/api/v1.1/exchange');
+        
+        const response = await fetch(`${proxyUrl}${encodedUrl}`, {
+        headers: {
+            'Accept': 'application/json',
+        },
+        // Timeout de 10 segundos
+        signal: AbortSignal.timeout(10000)
+        });
+        
+        if (!response.ok) {
+        console.warn(`Proxy responded with status: ${response.status}`);
+        return null;
+        }
+        
+        const rateData: SflRateResponse = await response.json();
+        
+        // Validar que la respuesta tenga la estructura esperada
+        if (!rateData.sfl || !rateData.sfl.usd) {
+        console.warn('Invalid price data structure:', rateData);
+        return null;
+        }
+
+        const rate = rateData.sfl.usd;
+
+        return rate;
+    } catch (error) {
+        console.error('Error fetching prices via proxy:', error);
+        return null;
+    }
+};
+
+// Función para obtener precios y actualizar definiciones
+export const fetchAndUpdatePrices = async (): Promise<PricesResponse | null> => {
+    try {
+        // Usar allorigins.win como proxy
+        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        const encodedUrl = encodeURIComponent('https://sfl.world/api/v1/prices');
+        
+        const response = await fetch(`${proxyUrl}${encodedUrl}`, {
+        headers: {
+            'Accept': 'application/json',
+        },
+        // Timeout de 10 segundos
+        signal: AbortSignal.timeout(10000)
+        });
+        
+        if (!response.ok) {
+        console.warn(`Proxy responded with status: ${response.status}`);
+        return null;
+        }
+        
+        const priceData: PricesResponse = await response.json();
+        
+        // Validar que la respuesta tenga la estructura esperada
+        if (!priceData.data || !priceData.data.p2p) {
+        console.warn('Invalid price data structure:', priceData);
+        return null;
+        }
+        
+        // Actualizar precios SFL en las definiciones
+        Object.values(resourceDefinitions).forEach((definition) => {
+        const sflPrice = priceData.data.p2p[definition.name];
+        if (sflPrice !== undefined) {
+            definition.sflPrice = sflPrice;
+        }
+        });
+        
+        return priceData;
+    } catch (error) {
+        console.error('Error fetching prices via proxy:', error);
+        return null;
+    }
+};
+
+// Función para calcular los recursos necesarios con costo total 
 export const calculateResources = (targetResource: string, quantity: number): CalculationResult => {
-  // Objeto para almacenar la cantidad total de cada recurso
-    const resourceCounts: Record<string, number> = {};
+
+    const resourceCounts: Record<string, number> = {};// Objeto para almacenar la cantidad total de cada recurso
     
-    // Inicializar todos los recursos con 0
-    Object.keys(resourceDefinitions).forEach(resource => {
+    Object.keys(resourceDefinitions).forEach(resource => {// Inicializar todos los recursos con 0
         resourceCounts[resource] = 0;
     });
     
-    // Función recursiva mejorada para contar todas las dependencias
-    const calculateDependencies = (resourceKey: string, neededQuantity: number): void => {
+    
+    const calculateDependencies = (resourceKey: string, neededQuantity: number): void => {// Función recursiva mejorada para contar todas las dependencias
+        
         const definition = resourceDefinitions[resourceKey];
         
-        // Si no tiene requisitos, no hacer nada más
         if (!definition.requires || definition.requires.length === 0) {
-        return;
+            return;
         }
-        
-        // Para cada requisito
         definition.requires.forEach(req => {
-        const requiredQuantity = req.quantity * neededQuantity;
-        
-        // Sumar al contador global
-        resourceCounts[req.resource] += requiredQuantity;
-        
-        // Procesar las dependencias de este requisito
-        calculateDependencies(req.resource, requiredQuantity);
+            const requiredQuantity = req.quantity * neededQuantity;
+            resourceCounts[req.resource] += requiredQuantity;
+            calculateDependencies(req.resource, requiredQuantity);
         });
     };
-    
-    // Iniciar el cálculo con el recurso objetivo
+
     calculateDependencies(targetResource, quantity);
-    
-    // También añadir el recurso objetivo mismo
     resourceCounts[targetResource] += quantity;
     
-    // CALCULAR COSTOS
     let totalCost = 0;
     const resourcesWithDetails: Record<string, ResourceDetails> = {};
     const steps: string[] = [];
     
-    // Primero calcular costos de herramientas
-    Object.entries(resourceCounts).forEach(([resourceKey, count]) => {
+    Object.entries(resourceCounts).forEach(([resourceKey, count]) => {// Primero calcular costos de herramientas
         if (count > 0) {
         const definition = resourceDefinitions[resourceKey];
         
-        // Solo herramientas tienen costo
         if (definition.cost) {
             const resourceCost = definition.cost * count;
             totalCost += resourceCost;
@@ -589,7 +658,6 @@ export const calculateResources = (targetResource: string, quantity: number): Ca
         }
     });
     
-    // Calcular herramientas totales y recursos básicos
     const tools = ['hacha', 'pico-madera', 'pico-piedra', 'pico-hierro', 'pico-oro'];
     const basicResources = ['madera', 'piedra', 'hierro', 'oro'];
     
@@ -598,12 +666,24 @@ export const calculateResources = (targetResource: string, quantity: number): Ca
     
     // Generar descripción paso a paso
     generateStepDescription(targetResource, quantity, steps, totalCost, resourceCounts);
+
+    //Calculo de costo en $SFL
+    let totalSfl = 0;
+    Object.entries(resourceCounts).forEach(([resourceKey, count]) => {
+        if (count > 0) {
+            const definition = resourceDefinitions[resourceKey];
+            if (definition.sflPrice) {
+                totalSfl += definition.sflPrice * count;
+            }
+        }
+    });
     
     return {
         targetResource,
         quantity,
         resources: resourcesWithDetails,
         totalCost,
+        totalSfl,
         totalTools,
         totalBasicResources,
         steps: steps,
